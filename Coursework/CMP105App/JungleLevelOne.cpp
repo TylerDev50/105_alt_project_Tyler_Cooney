@@ -46,11 +46,12 @@ JungleLevelOne::JungleLevelOne(sf::RenderWindow& window, Input& input,
         b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  ,
         b  , b  , b  , 21 , 22 , 22 , 23 , b  , b  , b  , b  , b  , b  , b  , b  , 21 , 22 , 23 , b  , b  , b  , b  , b  , b  , b  , b  , 21 , 22 , 22 , 23 , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  ,
         b  , b  , b  , 121, 122, 122, 123, b  , b  , b  , b  , b  , b  , b  , b  , 121, 122, 123, b  , b  , b  , b  , 21 , 22 , 22 , 22 , 121, 122, 122, 123, b  , b  , b  , b  , b  , b  , b  , b  , b  , b  ,
-        21 , 22 , 22 , 121, 122, 122, 123, b  , b  , 3  , 3  , b  , b  , b  , b  , 121, 122, 123, b  , b  , 121, 122, 121, 122, 122, 122, 121, 122, 122, 123, b  , b  , 21 , 22 , 22 , 22 , 22 , 22 , 22 , 23 ,
-        121, 122, 122, 121, 122, 122, 123, b  , b  , 121, 121, b  , b  , b  , b  , 121, 122, 123, b  , b  , 121, 122, 121, 122, 122, 122, 121, 122, 122, 123, b  , b  , 121, 122, 122, 122, 122, 122, 122, 123,
-        121, 122, 122, 121, 122, 122, 123, b  , b  , 121, 121, b  , b  , b  , b  , 121, 122, 123, b  , b  , 121, 122, 121, 122, 122, 122, 121, 122, 122, 123, b  , b  , 121, 122, 122, 122, 122, 122, 122, 123,
-        141, 142, 142, 141, 142, 142, 143, b  , b  , 141, 141, b  , b  , b  , b  , 141, 142, 143, b  , b  , 141, 142, 141, 142, 142, 142, 141, 142, 142, 143, b  , b  , 141, 142, 142, 142, 142, 142, 142, 143,
+        21 , 22 , 22 , 121, 122, 122, 123, b  , b  , b  , b  , b  , b  , b  , b  , 121, 122, 123, b  , b  , 121, 122, 121, 122, 122, 122, 121, 122, 122, 123, b  , b  , 21 , 22 , 22 , 22 , 22 , 22 , 22 , 23 ,
+        121, 122, 122, 121, 122, 122, 123, b  , b  , b  , b  , b  , b  , b  , b  , 121, 122, 123, b  , b  , 121, 122, 121, 122, 122, 122, 121, 122, 122, 123, b  , b  , 121, 122, 122, 122, 122, 122, 122, 123,
+        121, 122, 122, 121, 122, 122, 123, b  , b  , b  , b  , b  , b  , b  , b  , 121, 122, 123, b  , b  , 121, 122, 121, 122, 122, 122, 121, 122, 122, 123, b  , b  , 121, 122, 122, 122, 122, 122, 122, 123,
+        141, 142, 142, 141, 142, 142, 143, b  , b  , b  , b  , b  , b  , b  , b  , 141, 142, 143, b  , b  , 141, 142, 141, 142, 142, 142, 141, 142, 142, 143, b  , b  , 141, 142, 142, 142, 142, 142, 142, 143,
     };
+    
 
     m_tilemap.loadTexture("gfx/tilemap.png");
     m_tilemap.setTileSet(tileSet);
@@ -111,13 +112,12 @@ JungleLevelOne::JungleLevelOne(sf::RenderWindow& window, Input& input,
     m_bananaCountText.setFillColor(sf::Color::Yellow);
     m_bananaCountText.setString("Bananas: 0 / 3");
 
-    // -------------------------------------------------------
-    // BANANAS  (3 hidden around the level)
-    // -------------------------------------------------------
+    
+// BANANAS - above their platforms, accounting for the 100px tilemap offset
     std::vector<sf::Vector2f> bananaPositions = {
-        {  3 * 72.f,  2 * 72.f + 100.f },   // above left platform
-        { 15 * 72.f,  2 * 72.f + 100.f },   // above middle platform
-        { 27 * 72.f,  1 * 72.f + 100.f },   // top of far right area
+        {  3 * 72.f, 100.f + (1 * 72.f) },    // above left platform
+        { 15 * 72.f, 100.f + (1 * 72.f) },    // above middle platform
+        { 27 * 72.f, 100.f + (0 * 72.f) },    // above far right platform
     };
     for (auto& pos : bananaPositions)
     {
@@ -127,14 +127,13 @@ JungleLevelOne::JungleLevelOne(sf::RenderWindow& window, Input& input,
         m_bananas.push_back(ban);
     }
 
-    // -------------------------------------------------------
-    // MONKEYS  (guards near bananas, each with a line of dialogue)
-    // -------------------------------------------------------
+    
+    // MONKEYS - standing on the ground row (row 4 is ground top, so place at row 3)
     std::vector<std::pair<sf::Vector2f, std::string>> monkeyData = {
-        { {  1 * 72.f, 3 * 72.f + 100.f }, "You! Find my\nbanana or ELSE!" },
-        { { 14 * 72.f, 3 * 72.f + 100.f }, "My banana is\nup there somewhere!" },
-        { { 26 * 72.f, 2 * 72.f + 100.f }, "Don't come back\nwithout it, Dino!" },
-    };
+        { {  0 * 72.f,  316.f }, "You! Find my\nbanana or ELSE!" },
+        { { 13 * 72.f,  316.f }, "My banana is\nup there somewhere!" },
+        { { 25 * 72.f,  244.f }, "Don't come back\nwithout it, Dino!" },
+	};
     for (auto& [pos, line] : monkeyData)
     {
         Monkey* monk = new Monkey();

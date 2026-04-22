@@ -1,7 +1,7 @@
 #include "Menu.h"
 
 Menu::Menu(sf::RenderWindow& hwnd, Input& in, GameState& gs, AudioManager& aud) :
-	Scene(hwnd, in, gs, aud), m_playButtonLabel(m_font), m_playButton2Label(m_font)
+	Scene(hwnd, in, gs, aud), m_playButtonLabel(m_font), m_playButton2Label(m_font), m_playJungleButtonLabel(m_font)
 {
 	if (!m_font.openFromFile("font/bitcount.ttf"))
 		std::cerr << "failed to load bitcount font";
@@ -25,6 +25,17 @@ Menu::Menu(sf::RenderWindow& hwnd, Input& in, GameState& gs, AudioManager& aud) 
 	m_play2Button.setCollisionBox({ {0,0}, m_playButton.getSize() });
 	m_play2Button.setFillColor(m_defaultButtonColour);
 
+	// Jungle button - sits below level 2 button
+	m_playJungleButtonLabel.setCharacterSize(24);
+	m_playJungleButtonLabel.setPosition({ 155, 373 });
+	m_playJungleButtonLabel.setString("Jungle Level 1");
+	m_playJungleButtonLabel.setFillColor(sf::Color::Black);
+
+	m_playJungleButton.setSize({ 216, 100 });
+	m_playJungleButton.setPosition({ 108, 338 });
+	m_playJungleButton.setCollisionBox({ {0,0}, m_playJungleButton.getSize() });
+	m_playJungleButton.setFillColor(m_defaultButtonColour);
+
 	if (!m_titleSplash.loadFromFile("gfx/title_splash.png")) std::cerr << "no splash found";
 	m_titleImage.setTexture(&m_titleSplash);
 	m_titleImage.setSize({ 432,432 });
@@ -43,6 +54,11 @@ void Menu::handleInput(float dt)
 	{
 		m_gameState.setCurrentState(State::LEVELTWO);
 	}
+	if (m_input.isLeftMousePressed() &&
+		Collision::checkBoundingBox(m_playJungleButton, mousePos))
+	{
+		m_gameState.setCurrentState(State::JUNGLEONE);
+	}
 }
 
 void Menu::render()
@@ -53,6 +69,8 @@ void Menu::render()
 	m_window.draw(m_playButtonLabel);
 	m_window.draw(m_play2Button);
 	m_window.draw(m_playButton2Label);
+	m_window.draw(m_playJungleButton);
+	m_window.draw(m_playJungleButtonLabel);
 	endDraw();
 }
 
@@ -70,12 +88,17 @@ void Menu::update(float dt)
 	if (Collision::checkBoundingBox(m_play2Button, mousePos))
 	{
 		m_play2Button.setFillColor(m_hoverButtonColour);
+
 	}
 	else
 	{
 		m_play2Button.setFillColor(m_defaultButtonColour);
 
 	}
+	if (Collision::checkBoundingBox(m_playJungleButton, mousePos))
+		m_playJungleButton.setFillColor(m_hoverButtonColour);
+	else
+		m_playJungleButton.setFillColor(m_defaultButtonColour);
 }
 
 void Menu::onBegin()

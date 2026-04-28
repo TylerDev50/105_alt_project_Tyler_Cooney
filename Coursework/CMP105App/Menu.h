@@ -18,10 +18,12 @@ private:
     GameObject m_playButton;
     GameObject m_play2Button;
     GameObject m_playJungleButton;
+    GameObject m_playJungle2Button;
     sf::Font m_font;
     sf::Text m_playButtonLabel;
     sf::Text m_playButton2Label;
     sf::Text m_playJungleButtonLabel;
+    sf::Text m_playJungle2ButtonLabel;
     GameObject m_titleImage;
     sf::Texture m_titleSplash;
 

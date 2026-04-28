@@ -1,11 +1,11 @@
-#include "JungleLevelOne.h"
+#include "JungleLevelTwo.h"
 
-JungleLevelOne::JungleLevelOne(sf::RenderWindow& window, Input& input,
+JungleLevelTwo::JungleLevelTwo(sf::RenderWindow& window, Input& input,
     GameState& gameState, AudioManager& audio)
     : Scene(window, input, gameState, audio), m_alertText(m_font), m_bananaCountText(m_font)
 {
     // -------------------------------------------------------
-    // TILESET  (identical convention to LevelWithTiles)
+    // TILESET - identical setup to JungleLevelOne
     // -------------------------------------------------------
     GameObject tile;
     std::vector<GameObject> tileSet;
@@ -31,27 +31,22 @@ JungleLevelOne::JungleLevelOne(sf::RenderWindow& window, Input& input,
         tileSet.push_back(tile);
     }
 
-    // Blank tile
     tile.setTextureRect({ {0, 0}, {-24, -24} });
     tile.setCollider(false);
     int b = tileSet.size();
     tileSet.push_back(tile);
 
-    // -------------------------------------------------------
-    // LEVEL MAP
-    // -------------------------------------------------------
-    sf::Vector2u mapDimensions{ 40, 8 };
+	//Level design 
+    sf::Vector2u mapDimensions{ 40, 7 };
     std::vector<int> tileMap = {
-        b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  ,
-        b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  ,
-        b  , b  , b  , 21 , 22 , 22 , 23 , b  , b  , b  , b  , b  , b  , b  , b  , 21 , 22 , 23 , b  , b  , b  , b  , b  , b  , b  , b  , 21 , 22 , 22 , 23 , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  ,
-        b  , b  , b  , 121, 122, 122, 123, b  , b  , b  ,21  ,23  , b  , b  , b  , 121, 122, 123, b  , b  , b  , b  , 21 , 22 , 22 , 22 , 121, 122, 122, 123, b  , b  , b  , b  , b  , b  , b  , b  , b  , b  ,
-        21 , 22 , 22 , 121, 122, 122, 123, b  , b  , b  ,121 ,123 , b  , b  , b  , 121, 122, 123, b  , b  , 21 , 22 , 121, 122, 122, 122, 121, 122, 122, 123, b  , b  , 21 , 22 , 22 , 22 , 22 , 22 , 22 , 23 ,
-        121, 122, 122, 121, 122, 122, 123, b  , b  , b  ,121 ,123 , b  , b  , b  , 121, 122, 123, b  , b  , 121, 122, 121, 122, 122, 122, 121, 122, 122, 123, b  , b  , 121, 122, 122, 122, 122, 122, 122, 123,
-        121, 122, 122, 121, 122, 122, 123, b  , b  , b  ,121 ,123 , b  , b  , b  , 121, 122, 123, b  , b  , 121, 122, 121, 122, 122, 122, 121, 122, 122, 123, b  , b  , 121, 122, 122, 122, 122, 122, 122, 123,
-        141, 142, 142, 141, 142, 142, 143, b  , b  , b  ,141 ,143 , b  , b  , b  , 141, 142, 143, b  , b  , 141, 142, 141, 142, 142, 142, 141, 142, 142, 143, b  , b  , 141, 142, 142, 142, 142, 142, 142, 143,
+        21 , 22 , 22 , 22 , 22 , 22 , 23 , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , 21 , 22 , 22 , 23 , b  , b  , b  , b  , b  , b  , b  , b  , b  , b  ,
+        141, 142, 142, 142, 142, 142, 143, b  , 21 , 22 , 22 , 22 , 22 , 22 , 22 , 22 , 22 , 22 , 23 , b  , b  , b  , b  , b  , b  , b  , 141, 142, 142, 123, b  , 21 , 22 , 22 , 22 , 22 , 22 , 22 , 23 , b  ,
+        b  , b  , b  , b  , b  , b  , b  , b  , 121, 122, 122, 122, 122, 122, 122, 122, 122, 122, 123, b  , b  , b  , b  , b  , b  , b  , b  , b  , b  , 123, b  , 141, 142, 142, 142, 142, 142, 142, 123, b  ,
+        21 , 22 , 22 , 22 , 22 , 22 , 22 , 22 , 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 123, b  , b  , b  , b  , b  , 21 , 22 , 22 , 22 , 22 , 123, b  , b  , b  , b  , b  , b  , b  , b  , 123, b  ,
+        121, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 123, b  , b  , b  , b  , b  , 121, 122, 122, 122, 122, 122, 22 , 22 , 22 , 22 , 22 ,  22,  22,  22, 123, b  ,
+        121, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 123, b  , b  , b  , b  , b  , 121, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 122, 123, b  ,
+        141, 142, 142, 142, 142, 142, 142, 142, 142, 142, 142, 142, 142, 142, 142, 142, 142, 142, 143, b  , b  , b  , b  , b  , 141, 142, 142, 142, 142, 142, 142, 142, 142, 142, 142, 142, 142, 142, 143, b  ,
     };
-    
 
     m_tilemap.loadTexture("gfx/tilemap.png");
     m_tilemap.setTileSet(tileSet);
@@ -61,7 +56,7 @@ JungleLevelOne::JungleLevelOne(sf::RenderWindow& window, Input& input,
     tileSet.clear();
 
     // -------------------------------------------------------
-    // BACKGROUND
+    // BACKGROUND - same as level 1
     // -------------------------------------------------------
     tile_size = 24;
     num_columns = 8;
@@ -112,12 +107,16 @@ JungleLevelOne::JungleLevelOne(sf::RenderWindow& window, Input& input,
     m_bananaCountText.setFillColor(sf::Color::Yellow);
     m_bananaCountText.setString("Bananas: 0 / 3");
 
-    
-// BANANAS - above their platforms, accounting for the 100px tilemap offset
+    if (!m_tileTexture.loadFromFile("gfx/tilemap.png"))
+        std::cerr << "no tile texture\n";
+
+    // -------------------------------------------------------
+    // BANANAS
+    // -------------------------------------------------------
     std::vector<sf::Vector2f> bananaPositions = {
-        {  3 * 72.f, 100.f + (1 * 72.f) },    // above left platform
-        { 15 * 72.f, 100.f + (1 * 72.f) },    // above middle platform
-        { 27 * 72.f, 100.f + (0 * 72.f) },    // above far right platform
+        {  1 * 72.f, 100.f + (2 * 72.f) },   // top of left climb
+        { 28 * 72.f, 100.f + (2 * 72.f) },   // top of middle-right climb
+        { 35 * 72.f, 100.f + (3 * 72.f) },   // top of far right climb
     };
     for (auto& pos : bananaPositions)
     {
@@ -127,13 +126,31 @@ JungleLevelOne::JungleLevelOne(sf::RenderWindow& window, Input& input,
         m_bananas.push_back(ban);
     }
 
-    
-    // MONKEYS - standing on the ground row (row 4 is ground top, so place at row 3)
+    // -------------------------------------------------------
+    // RUBBLE
+    // -------------------------------------------------------
+    std::vector<sf::Vector2f> rubblePositions = {
+        {  3 * 72.f, 3.4 * 72.f },    // right in front of spawn - easy to see
+        { 26  * 72.f, 3.4 * 72.f },
+        { 31 * 72.f, 5.4 * 72.f },
+    };
+
+    for (auto& pos : rubblePositions)
+    {
+        Rubble* r = new Rubble();
+        r->setup(pos, &m_tileTexture);
+        m_rubble.push_back(r);
+    }
+
+    // -------------------------------------------------------
+    // MONKEYS - one per section, each near their banana
+    // -------------------------------------------------------
     std::vector<std::pair<sf::Vector2f, std::string>> monkeyData = {
-        { {  0 * 72.f,  316.f }, "You! Find my\nbanana or ELSE!" },
-        { { 20 * 72.f,  316.f }, "My banana is\nup there somewhere!" },
-        { { 25 * 72.f,  244.f }, "Don't come back\nwithout it, Dino!" },
-	};
+        { {  9 * 72.f, 1.5 * 72.f}, "SMASH the rocks!\nDASH through them!" },
+        { { 18 * 72.f, 1.5 * 72.f }, "My banana is Stuck!\nIn that Wall Over the gap!" },
+        { { 27 * 72.f, .4 * 72.f }, "Better Get my Banana,\n " },
+    };
+
     for (auto& [pos, line] : monkeyData)
     {
         Monkey* monk = new Monkey();
@@ -143,29 +160,38 @@ JungleLevelOne::JungleLevelOne(sf::RenderWindow& window, Input& input,
     }
 }
 
-void JungleLevelOne::handleInput(float dt)
+// -------------------------------------------------------
+// INPUT
+// -------------------------------------------------------
+void JungleLevelTwo::handleInput(float dt)
 {
     m_player.handleInput(dt);
     if (m_input.isPressed(sf::Keyboard::Scancode::Escape))
         m_gameState.setCurrentState(State::MENU);
 }
 
-void JungleLevelOne::update(float dt)
+// -------------------------------------------------------
+// UPDATE
+// -------------------------------------------------------
+void JungleLevelTwo::update(float dt)
 {
     m_player.update(dt);
 
-    // Tile collision
+    // Tile collisions
     for (auto& t : *m_tilemap.getLevel())
         if (t.isCollider() && Collision::checkBoundingBox(m_player, t))
             m_player.collisionResponse(t);
 
-    // Update and collect bananas
+    // Rubble - must come before banana so dash-through works this frame
+    checkRubbleCollisions();
+
+    // Bananas
     checkBananaCollisions(dt);
 
-    // Update monkeys + show dialogue
-    checkMonkeyDialogue();
+    // Monkey dialogue
+    checkMonkeyDialogue(dt);
 
-    // Prompt timer countdown
+    // Prompt timer
     if (m_promptTimer > 0) m_promptTimer -= dt;
     else if (!m_levelComplete) m_alertText.setString("");
 
@@ -173,34 +199,55 @@ void JungleLevelOne::update(float dt)
     if (m_bananasCollected >= BANANAS_NEEDED && !m_levelComplete)
     {
         m_levelComplete = true;
-        m_alertText.setString("The monkeys are\npleased! Press F\nto escape!");
+        m_alertText.setString("All bananas found!\nThe monkeys cheer!\nPress F to finish!");
         m_alertText.setPosition(
             m_window.getView().getCenter() + sf::Vector2f(-120.f, -150.f));
         m_promptTimer = 999.f;
     }
     if (m_levelComplete && m_input.isPressed(sf::Keyboard::Scancode::F))
-        m_gameState.setCurrentState(State::JUNGLETWO); 
+        m_gameState.setCurrentState(State::MENU);
 
-    // Death
+    // Death reset
     if (m_player.getPosition().y > 1200)
     {
         m_player.reset();
         m_audio.playSoundbyName("death");
     }
 
-    // Banana HUD anchored to view
+    // HUD anchor to view
     m_bananaCountText.setPosition(
         m_window.getView().getCenter() + sf::Vector2f(-210.f, -210.f));
 
     updateCameraAndBackground();
 }
 
-void JungleLevelOne::checkBananaCollisions(float dt)
+void JungleLevelTwo::checkRubbleCollisions()
+{
+    for (auto& rubble : m_rubble)
+    {
+        if (rubble->isDestroyed()) continue;
+
+        if (Collision::checkBoundingBox(m_player, *rubble))
+        {
+            if (m_player.isDashing())
+            {
+                rubble->destroy();
+                m_audio.playSoundbyName("coin");  
+            }
+            else
+            {
+                m_player.collisionResponse(*rubble);
+            }
+        }
+    }
+}
+
+void JungleLevelTwo::checkBananaCollisions(float dt)
 {
     for (auto& banana : m_bananas)
     {
         if (banana->isCollected()) continue;
-        banana->update(dt);   // now uses real dt
+        banana->update(dt);
         if (Collision::checkBoundingBox(m_player, *banana))
         {
             banana->collect();
@@ -212,28 +259,26 @@ void JungleLevelOne::checkBananaCollisions(float dt)
     }
 }
 
-void JungleLevelOne::checkMonkeyDialogue()
+void JungleLevelTwo::checkMonkeyDialogue(float dt)
 {
-    bool nearMonkey = false;
     for (auto& monkey : m_monkeys)
     {
-        monkey->update(0.016f);
-        if (monkey->playerInRange(m_player.getPosition()))
+        monkey->update(dt);
+        if (monkey->playerInRange(m_player.getPosition()) && !m_levelComplete)
         {
-            nearMonkey = true;
-            if (!m_levelComplete)
-            {
-                m_alertText.setString(monkey->getDialogue());
-                m_alertText.setCharacterSize(20);
-                m_alertText.setPosition(
-                    m_window.getView().getCenter() + sf::Vector2f(-100.f, -150.f));
-                m_promptTimer = 0.1f;  // keep refreshing while in range
-            }
+            m_alertText.setString(monkey->getDialogue());
+            m_alertText.setCharacterSize(20);
+            m_alertText.setPosition(
+                m_window.getView().getCenter() + sf::Vector2f(-100.f, -150.f));
+            m_promptTimer = 0.1f;
         }
     }
 }
 
-void JungleLevelOne::updateCameraAndBackground()
+// -------------------------------------------------------
+// CAMERA - identical to level 1
+// -------------------------------------------------------
+void JungleLevelTwo::updateCameraAndBackground()
 {
     auto view = m_window.getView();
     auto player_pos = m_player.getPosition() + m_player.getSize() * 0.5f;
@@ -248,11 +293,16 @@ void JungleLevelOne::updateCameraAndBackground()
     m_bgtilemap.setPosition({ player_pos.x - halfW, 0 });
 }
 
-void JungleLevelOne::render()
+// -------------------------------------------------------
+// RENDER
+// -------------------------------------------------------
+void JungleLevelTwo::render()
 {
     beginDraw();
     m_bgtilemap.render(m_window);
     m_tilemap.render(m_window);
+    for (auto& rubble : m_rubble)
+        if (!rubble->isDestroyed()) m_window.draw(*rubble);
     for (auto& banana : m_bananas)
         if (!banana->isCollected()) m_window.draw(*banana);
     for (auto& monkey : m_monkeys)
@@ -261,30 +311,45 @@ void JungleLevelOne::render()
     m_window.draw(m_alertText);
     m_window.draw(m_bananaCountText);
     endDraw();
+
+    // TEMP DEBUG - remove later
+    for (auto& rubble : m_rubble)
+    {
+        std::cout << "Rubble at: " << rubble->getPosition().x
+            << "/" << rubble->getPosition().y
+            << " destroyed: " << rubble->isDestroyed() << "\n";
+    }
 }
 
-void JungleLevelOne::onBegin()
+// -------------------------------------------------------
+// LIFECYCLE
+// -------------------------------------------------------
+void JungleLevelTwo::onBegin()
 {
-    std::cout << "Jungle level one started\n";
+    std::cout << "Jungle level two started\n";
     m_audio.playMusicbyName("bgm1");
     m_player.reset();
     m_player.setPosition({ 72.f, 50.f });
 
-    m_alertText.setString("The monkeys have\nkidnapped you!\nFind their bananas!");
+    m_alertText.setString("Deeper in the jungle!\nSmash rubble to\nfind the bananas!");
     m_alertText.setPosition({ 50, 150 });
     m_alertText.setCharacterSize(24);
     m_alertText.setFillColor(sf::Color::Black);
     m_promptTimer = PROMPT_TIME;
 }
 
-void JungleLevelOne::onEnd()
+void JungleLevelTwo::onEnd()
 {
-    std::cout << "Jungle level one ended\n";
+    std::cout << "Jungle level two ended\n";
     m_player.reset();
     m_bananasCollected = 0;
     m_levelComplete = false;
     m_bananaCountText.setString("Bananas: 0 / 3");
     for (auto& ban : m_bananas) ban->reset();
+    for (auto& r : m_rubble)
+    {
+        for (auto& r : m_rubble) r->reset();
+    }
     m_audio.stopAllSounds();
     m_audio.stopAllMusic();
 }

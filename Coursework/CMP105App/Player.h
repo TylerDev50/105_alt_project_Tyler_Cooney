@@ -13,17 +13,24 @@ public:
 
     void handleInput(float dt) override;
     void update(float dt) override;
+
     void collisionResponse(GameObject& collider) override;
     void setEdges(float left, float right) { m_leftEdge = left; m_rightEdge = right; };
+    
     void setLeverPosition(sf::Vector2f leverPos) { m_leverPosition = leverPos; };
     void setEndGamePosition(sf::Vector2f endPos) { m_endPosition = endPos; };
     bool inLeverRange();
     bool inEndRange();
     bool getLeverPulled() { return m_leverPulled; };
     bool getGameEndTriggered() { return m_gameEndTriggered; };
+    
     void reset();
+    
     void setCanDoubleJump(bool value) { m_canDoubleJump = value; };
     bool canDoubleJump() { return m_canDoubleJump; };
+    
+    bool isDashing() const { return m_sprintTimer > 0.f; }
+
     void setAudio(AudioManager* audio) { m_audio = audio; };
 
 private:
@@ -52,10 +59,12 @@ private:
     const float COEFF_OF_REST = 0.8f;
     const float DRAG_FACTOR = 0.9f;
     const float AIR_DRAG_FACTOR = 0.99f;
-    const float TURN_DRAG = 0.6f;       // allow snappy decel for turning
+    const float TURN_DRAG = 0.6f;       
     const float JUMP_FORCE = 10.0f;
     const float SPRINT_ANIM_THRESHOLD = 1.2f * SPEED;
     const float ACTIVATE_RANGE_SQUARED = 700.0f;
+
+
 
 };
 

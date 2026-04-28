@@ -81,6 +81,12 @@
     <ClCompile Include="Monkey.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Rubble.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="JungleLevelTwo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Animation.h">
@@ -141,6 +147,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Monkey.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rubble.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="JungleLevelTwo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

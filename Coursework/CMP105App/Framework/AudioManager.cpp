@@ -4,6 +4,7 @@ AudioManager::AudioManager()
 {
 	addSound("jump", "sfx/jump.mp3");
 	addSound("wind", "sfx/wind.mp3");
+	getSound("wind")->setVolume(25.f);
 	addSound("death", "sfx/death.mp3");
 
 	addMusic("bgm1", "sfx/bgm1.mp3");

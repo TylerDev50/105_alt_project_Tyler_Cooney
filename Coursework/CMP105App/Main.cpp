@@ -14,6 +14,7 @@
 #include "LevelWithTiles.h"
 #include "LevelTwoWithTiles.h"
 #include "JungleLevelOne.h"
+#include "JungleLevelTwo.h"
 
 #ifndef SFML_VERSION_MAJOR
 	#error "SFML 3 is required for this framework."
@@ -95,6 +96,7 @@ int main()
 	LevelWithTiles tile_level(window, input, gameState, audioManager);
 	LevelTwoWithTiles tile_level_two(window, input, gameState, audioManager);
 	JungleLevelOne jungle_level_one(window, input, gameState, audioManager);
+	JungleLevelTwo jungle_level_two(window, input, gameState, audioManager);
 	Scene* currentScene = &menu;
 
 	// Initialise objects for delta time
@@ -109,7 +111,8 @@ int main()
 		{State::MENU, &menu},
 		{State::LEVELONE, &tile_level},
 		{State::LEVELTWO, &tile_level_two},
-		{ State::JUNGLEONE, &jungle_level_one }
+		{ State::JUNGLEONE, &jungle_level_one },
+		{ State::JUNGLETWO,& jungle_level_two }
 	};
 	
 	// Game Loop

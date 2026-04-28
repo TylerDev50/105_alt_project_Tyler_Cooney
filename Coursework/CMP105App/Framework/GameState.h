@@ -11,6 +11,7 @@ enum class State {
 	LEVELONE, 
 	LEVELTWO, 
 	JUNGLEONE,
+	JUNGLETWO,
 	PAUSE, 
 	CREDITS 
 

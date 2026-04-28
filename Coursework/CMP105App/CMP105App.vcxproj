@@ -195,6 +195,7 @@ sfml-network.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Framework\SoundObject.cpp" />
     <ClCompile Include="Framework\TileMap.cpp" />
     <ClCompile Include="JungleLevelOne.cpp" />
+    <ClCompile Include="JungleLevelTwo.cpp" />
     <ClCompile Include="LevelTwoWithTiles.cpp" />
     <ClCompile Include="LevelWithTiles.cpp" />
     <ClCompile Include="Lever.cpp" />
@@ -202,6 +203,7 @@ sfml-network.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Monkey.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Rubble.cpp" />
     <ClCompile Include="Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -218,12 +220,14 @@ sfml-network.lib;%(AdditionalDependencies)</AdditionalDependencies>
     <ClInclude Include="Framework\SoundObject.h" />
     <ClInclude Include="Framework\TileMap.h" />
     <ClInclude Include="JungleLevelOne.h" />
+    <ClInclude Include="JungleLevelTwo.h" />
     <ClInclude Include="LevelTwoWithTiles.h" />
     <ClInclude Include="LevelWithTiles.h" />
     <ClInclude Include="Lever.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Monkey.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Rubble.h" />
     <ClInclude Include="Scene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

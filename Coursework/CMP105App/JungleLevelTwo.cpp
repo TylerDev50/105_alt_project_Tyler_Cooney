@@ -130,9 +130,9 @@ JungleLevelTwo::JungleLevelTwo(sf::RenderWindow& window, Input& input,
     // RUBBLE
     // -------------------------------------------------------
     std::vector<sf::Vector2f> rubblePositions = {
-        {  3 * 72.f, 3.4 * 72.f },    // right in front of spawn - easy to see
+        {  3 * 72.f, 3.4 * 72.f },   
         { 26  * 72.f, 3.4 * 72.f },
-        { 31 * 72.f, 5.4 * 72.f },
+        { 31 * 72.f, 4.4 * 72.f },
     };
 
     for (auto& pos : rubblePositions)
